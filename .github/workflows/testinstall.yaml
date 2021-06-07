@@ -32,7 +32,7 @@ jobs:
       - name: Set BiocManager version
         if: matrix.config.image == null
         run: |
-          remotes::install_github('Bioconductor/BiocManager')
+          remotes::install_github("Bioconductor/BiocManager", ref = "pass-force")
           print(BiocManager::version())
           BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
         shell: Rscript {0}
