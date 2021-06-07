@@ -1,0 +1,38 @@
+on: 
+  push
+
+name: testinstall
+
+jobs:
+  testinstall:
+    runs-on: ${{ matrix.config.os }}
+        
+    name: ${{ matrix.config.os }}
+        
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - { os: macOS-latest, r: '4.1', bioc: 'devel'}
+        
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@master
+        with:
+          r-version: ${{ matrix.config.r }}
+
+      - name: Install remotes and rmarkdown
+        run: |
+          install.packages(c('remotes', 'rmarkdown'))
+        shell: Rscript {0}
+
+      - name: Set BiocManager version
+        if: matrix.config.image == null
+        run: |
+          install.packages('BiocManager')
+          BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
+        shell: Rscript {0}
+
