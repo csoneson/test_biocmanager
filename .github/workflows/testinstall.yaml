@@ -14,8 +14,8 @@ jobs:
       matrix:
         config:
         - {os: macOS-latest, r: '4.1', bioc: 'devel'}
-        - {os: windows-latest, r: '4.1', bioc: 'devel'}
-        - {os: ubuntu-latest, r: '4.1', bioc: 'devel'}
+        #- {os: windows-latest, r: '4.1', bioc: 'devel'}
+        #- {os: ubuntu-latest, r: '4.1', bioc: 'devel'}
         
     steps:
       - name: Check out repo
@@ -26,16 +26,8 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
 
-      - name: Install remotes and rmarkdown
+      - name: Get GITHUB_WORKSPACE
         run: |
-          install.packages(c('remotes', 'rmarkdown'))
-        shell: Rscript {0}
-
-      - name: Set BiocManager version
-        if: matrix.config.image == null
-        run: |
-          remotes::install_github("Bioconductor/BiocManager", ref = "pass-force")
-          print(BiocManager::version())
-          BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
+          Sys.getenv("GITHUB_WORKSPACE")
         shell: Rscript {0}
 
