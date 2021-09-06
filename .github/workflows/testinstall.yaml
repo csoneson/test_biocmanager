@@ -29,5 +29,6 @@ jobs:
       - name: Get GITHUB_WORKSPACE
         run: |
           Sys.getenv("GITHUB_WORKSPACE")
+          Sys.getenv("PATH")
         shell: Rscript {0}
 
