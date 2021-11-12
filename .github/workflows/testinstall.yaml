@@ -14,7 +14,7 @@ jobs:
       matrix:
         config:
         - {os: macOS-latest, r: '4.1', bioc: 'devel'}
-        #- {os: windows-latest, r: '4.1', bioc: 'devel'}
+        - {os: windows-latest, r: '4.1', bioc: 'devel'}
         #- {os: ubuntu-latest, r: '4.1', bioc: 'devel'}
         
     steps:
@@ -32,3 +32,10 @@ jobs:
           Sys.getenv("PATH")
         shell: Rscript {0}
 
+      - name: Install cygwin
+        if: runner.os == 'Windows'
+        uses: egor-tensin/setup-cygwin@v3
+        with:
+          platform: x64
+          packages: cmake gcc-g++
+            
