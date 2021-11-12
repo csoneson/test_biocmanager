@@ -34,7 +34,7 @@ jobs:
 
       - name: Install cygwin
         if: runner.os == 'Windows'
-        uses: egor-tensin/setup-cygwin@v3
+        uses: egor-tensin/setup-cygwin@v2
         with:
           platform: x64
           packages: cmake gcc-g++
