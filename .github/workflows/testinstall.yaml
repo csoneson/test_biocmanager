@@ -39,3 +39,11 @@ jobs:
           platform: x64
           packages: cmake gcc-g++
             
+      - name: Install Rhtslib
+        run: |
+          install.packages("BiocManager")
+          BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
+          BiocManager::install("Rhtslib")
+        shell: Rscript {0}
+        
+        
