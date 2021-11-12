@@ -37,7 +37,7 @@ jobs:
         uses: egor-tensin/setup-cygwin@v2
         with:
           platform: x64
-          packages: cmake gcc-g++
+          packages: cmake gcc-g++ libintl8 liblzma5 xz
             
       - name: Install Rhtslib
         run: |
