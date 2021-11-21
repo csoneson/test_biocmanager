@@ -32,18 +32,14 @@ jobs:
           Sys.getenv("PATH")
         shell: Rscript {0}
 
-      - name: Install cygwin
-        if: runner.os == 'Windows'
-        uses: egor-tensin/setup-cygwin@v2
-        with:
-          platform: x64
-          packages: cmake gcc-g++ libintl8 liblzma5 xz
             
       - name: Install Rhtslib
         run: |
           install.packages("BiocManager")
           BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
-          BiocManager::install("Rhtslib")
+          #BiocManager::install("Rhtslib")
+          BiocManager::install("zlibbioc")
+          install.packages('Rhtslib', repos = 'https://bioconductor.r-universe.dev')
         shell: Rscript {0}
         
         
