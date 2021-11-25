@@ -37,9 +37,9 @@ jobs:
         run: |
           install.packages("BiocManager")
           BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
-          #BiocManager::install("Rhtslib")
-          BiocManager::install("zlibbioc")
-          install.packages('Rhtslib', repos = 'https://bioconductor.r-universe.dev')
+          BiocManager::install("Rhtslib")
+          #BiocManager::install("zlibbioc")
+          #install.packages('Rhtslib', repos = 'https://bioconductor.r-universe.dev')
         shell: Rscript {0}
         
         
