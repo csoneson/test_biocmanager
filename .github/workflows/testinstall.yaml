@@ -13,8 +13,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - {os: macOS-latest, r: 'devel', bioc: 'devel'}
-        - {os: windows-latest, r: 'devel', bioc: 'devel'}
+        - {os: macOS-latest, r: '4.2', bioc: 'devel'}
+        # - {os: windows-latest, r: 'devel', bioc: 'devel'}
         #- {os: ubuntu-latest, r: 'devel', bioc: 'devel'}
         
     steps:
@@ -37,7 +37,7 @@ jobs:
         run: |
           install.packages("BiocManager")
           BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
-          BiocManager::install("Rhtslib")
+          BiocManager::install("Rhtslib", type = "source", force = TRUE)
           #BiocManager::install("zlibbioc")
           #install.packages('Rhtslib', repos = 'https://bioconductor.r-universe.dev')
         shell: Rscript {0}
