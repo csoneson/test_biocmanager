@@ -32,14 +32,10 @@ jobs:
           Sys.getenv("PATH")
         shell: Rscript {0}
 
-            
-      - name: Install Rhtslib
+      - name: Install BiocManager
         run: |
           install.packages("BiocManager")
-          BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
-          #BiocManager::install("Rhtslib", type = "source", force = TRUE)
-          #BiocManager::install("zlibbioc")
-          #install.packages('Rhtslib', repos = 'https://bioconductor.r-universe.dev')
+          #BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
         shell: Rscript {0}
         
         
