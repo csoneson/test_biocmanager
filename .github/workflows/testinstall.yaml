@@ -39,11 +39,7 @@ jobs:
         
       - name: Install Bioconductor
         run: |
+          options(error=function()traceback(2))
           BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
         shell: Rscript {0}
-        
-      - name: Traceback
-        if : always()
-        run: traceback()
-        shell: Rscript {0}
-        
+
