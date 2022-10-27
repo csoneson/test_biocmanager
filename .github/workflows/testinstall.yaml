@@ -35,7 +35,12 @@ jobs:
       - name: Install BiocManager
         run: |
           install.packages("BiocManager")
-          #BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
+        shell: Rscript {0}
+        
+      - name: Install Bioconductor
+        run: |
+          BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
+          traceback()
         shell: Rscript {0}
         
         
