@@ -34,7 +34,7 @@ jobs:
 
       - name: Install BiocManager
         run: |
-          install.package("remotes")
+          install.packages("remotes")
           remotes::install_github("Bioconductor/BiocManager", ref = "update_142")
           #install.packages("BiocManager")
         shell: Rscript {0}
