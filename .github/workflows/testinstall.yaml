@@ -80,7 +80,7 @@ jobs:
           basilisk::setupBasiliskEnv(
             envpath = file.path(tempdir(), "my-basilisk-env"), 
             packages = .orthos_dependencies,
-            channels = c("bioconda", "conda-forge"))
+            channels = "conda-forge")
           res <- basilisk::basiliskRun(
             env = file.path(tempdir(), "my-basilisk-env"), 
             fun = function() {
