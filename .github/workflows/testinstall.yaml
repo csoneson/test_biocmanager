@@ -237,19 +237,19 @@ jobs:
 
           basilisk.utils::installConda()
           basilisk::setupBasiliskEnv(
-            envpath = "my-basilisk-env",
+            envpath = file.path(".", "my-basilisk-env"),
             #envpath = file.path(tempdir(), "my-basilisk-env"), 
             packages = .orthos_dependencies,
             channels = "conda-forge")
           res <- basilisk::basiliskRun(
-            env = "my-basilisk-env",
+            env = file.path(".", "my-basilisk-env"),
             #env = file.path(tempdir(), "my-basilisk-env"), 
             fun = function() {
                 pd <- reticulate::import("pandas")
                 pd$`__version__`
             })
           print(res)
-          print(basilisk::listPackages(env = "my-basilisk-env"))
+          print(basilisk::listPackages(env = file.path(".", "my-basilisk-env")))
           #print(basilisk::listPackages(env = file.path(tempdir(), "my-basilisk-env")))
         shell: Rscript {0}
 
@@ -257,5 +257,5 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2.2.0
 
       - name: List content of environment
-        run: conda list -p my-basilisk-env
+        run: conda list -p ./my-basilisk-env
 
