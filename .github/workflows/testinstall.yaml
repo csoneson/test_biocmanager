@@ -6,7 +6,6 @@ name: testinstall
 jobs:
   testinstall:
     runs-on: ${{ matrix.config.os }}
-        
     name: ${{ matrix.config.os }}
         
     strategy:
