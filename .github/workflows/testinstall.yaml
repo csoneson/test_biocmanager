@@ -257,4 +257,3 @@ jobs:
 
       - name: List content of environment
         run: conda list -p ./my-basilisk-env
-
