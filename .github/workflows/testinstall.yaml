@@ -5,6 +5,9 @@ name: snakemake-test
 
 jobs:
   snakemake-test:
+    defaults:
+      run:
+        shell: bash -l {0}
     name: test snakemake
     runs-on: ${{ matrix.os }}
     strategy:
