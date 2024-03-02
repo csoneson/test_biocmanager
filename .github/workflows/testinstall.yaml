@@ -33,12 +33,11 @@ jobs:
       - name: Install Snakemake (macOS)
         if: runner.os == 'macOS'
         run: |
-          conda install bioconda::snakemake
+          conda create -c conda-forge -c bioconda -n snakemake snakemake
       
       - name: Run Snakemake (macOS)
         if: runner.os == 'macOS'
         run: |
-          conda init
-          conda activate base
+          conda activate snakemake
           snakemake --help
         
