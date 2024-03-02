@@ -29,6 +29,7 @@ jobs:
         with:
           auto-update-conda: true
           channels: bioconda,conda-forge,defaults
+          activate-environment: base
 
       - name: Install Snakemake (macOS)
         if: runner.os == 'macOS'
