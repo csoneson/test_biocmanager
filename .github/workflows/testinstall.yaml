@@ -38,6 +38,6 @@ jobs:
       - name: Run Snakemake (macOS)
         if: runner.os == 'macOS'
         run: |
-          conda activate snakemake
+          source activate snakemake
           snakemake --help
         
