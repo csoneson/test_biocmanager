@@ -28,13 +28,9 @@ jobs:
         run: |
           brew install jpeg
           brew link jpeg
+          echo 'export PATH="/opt/homebrew/opt/jpeg/bin:$PATH"' >> /Users/runner/.bash_profile
 
       - name: Install jpeg
-        env:
-          LDFLAGS: "-L/opt/homebrew/opt/jpeg/lib"
-          CPPFLAGS: "-I/opt/homebrew/opt/jpeg/include"
-          PKG_CONFIG_PATH: "/opt/homebrew/opt/jpeg/lib/pkgconfig"
-          CFLAGS: "-I/opt/homebrew/opt/jpeg/include"
         run: |
           install.packages("jpeg")
         shell: Rscript {0}
