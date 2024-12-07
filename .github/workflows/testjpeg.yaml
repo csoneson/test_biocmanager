@@ -27,7 +27,8 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install jpeg
-          brew link jpeg
+          brew cleanup
+          brew link --force jpeg
           echo 'export PATH="/opt/homebrew/opt/jpeg/bin:$PATH"' >> /Users/runner/.bash_profile
 
       - name: Install jpeg
