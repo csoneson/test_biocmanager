@@ -27,7 +27,8 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install jpeg
-          echo '\nexport PATH="/opt/homebrew/opt/jpeg/bin:$PATH"' >> /Users/runner/.bash_profile
+          echo ' ' >> /Users/runner/.bash_profile
+          echo 'export PATH="/opt/homebrew/opt/jpeg/bin:$PATH"' >> /Users/runner/.bash_profile
       
       - name: Get path to jpeg
         if: runner.os == 'macOS'
