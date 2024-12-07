@@ -27,28 +27,9 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install jpeg
-          brew cleanup
           brew link jpeg
-          mkdir -p /Users/runner/.R
-          touch /Users/runner/.R/Makevars
-          echo ' ' >> /Users/runner/.bash_profile
-          echo 'export PATH="/opt/homebrew/opt/jpeg/bin:$PATH"' >> /Users/runner/.bash_profile
-          echo 'export LDFLAGS="-L/opt/homebrew/opt/jpeg/lib"' >> /Users/runner/.R/Makevars
-          echo 'export CPPFLAGS="-I/opt/homebrew/opt/jpeg/include"' >> /Users/runner/.R/Makevars
-          echo 'export PKG_CONFIG_PATH="/opt/homebrew/opt/jpeg/lib/pkgconfig"' >> /Users/runner/.R/Makevars
-      
-      - name: Get path to jpeg
-        if: runner.os == 'macOS'
-        run: |
-          cat /Users/runner/.bash_profile
-          find $(brew --prefix jpeg) -name jpeglib.h
-      
+
       - name: Install jpeg
-        env:
-          LDFLAGS: "-L/opt/homebrew/opt/jpeg/lib"
-          CPPFLAGS: "-I/opt/homebrew/opt/jpeg/include"
-          PKG_CONFIG_PATH: "/opt/homebrew/opt/jpeg/lib/pkgconfig"
-          CFLAGS: "-I/opt/homebrew/opt/jpeg/include"
         run: |
           install.packages("jpeg")
         shell: Rscript {0}
