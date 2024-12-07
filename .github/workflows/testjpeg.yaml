@@ -27,6 +27,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install jpeg
+          brew install fftw
           mkdir -p /Users/runner/.R
           touch /Users/runner/.R/Makevars
           echo 'export PKG_CONFIG_PATH="/opt/homebrew/opt/jpeg/lib/pkgconfig"' >> /Users/runner/.R/Makevars
@@ -34,6 +35,8 @@ jobs:
       - name: Install jpeg
         run: |
           install.packages("jpeg")
+          install.packages("BiocManager")
+          BiocManager::install("EBImage")
         shell: Rscript {0}
       
 
