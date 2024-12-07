@@ -1,0 +1,40 @@
+on:
+  push
+
+name: jpeg-test
+
+jobs:
+  jpeg-test:
+    name: test-jpeg
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest]
+        include:
+        - os: macos-latest
+          rversion: 'devel'
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      
+      - name: Install R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.rversion }}
+      
+      - name: Install system dependencies
+        if: runner.os == 'macOS'
+        run: |
+          brew install jpeg
+          mkdir -p /Users/runner/.R
+          touch /Users/runner/.R/Makevars
+          echo 'export PKG_CONFIG_PATH="/opt/homebrew/opt/jpeg/lib/pkgconfig"' >> /Users/runner/.R/Makevars
+
+      - name: Install jpeg
+        run: |
+          install.packages("jpeg")
+        shell: Rscript {0}
+      
+
+        
