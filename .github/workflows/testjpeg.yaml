@@ -31,6 +31,7 @@ jobs:
       - name: Install jpeg
         run: |
           install.packages("jpeg")
+        shell: Rscript {0}
       
 
         
