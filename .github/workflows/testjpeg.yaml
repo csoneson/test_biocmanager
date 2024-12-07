@@ -28,7 +28,12 @@ jobs:
         run: |
           brew install jpeg
           echo 'export PATH="/opt/homebrew/opt/jpeg/bin:$PATH"' >> /Users/runner/.bash_profile
-          find $(brew --prefix jpeg) -name jpeglib.h
+      
+      - name: Get path to jpeg
+        if: runner.os == 'macOS'
+        run: |
+          echo $(find $(brew --prefix jpeg) -name jpeglib.h)
+          cat /Users/runner/.bash_profile
       
       - name: Install jpeg
         env:
