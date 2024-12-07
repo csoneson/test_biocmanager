@@ -32,8 +32,8 @@ jobs:
       - name: Get path to jpeg
         if: runner.os == 'macOS'
         run: |
-          echo $(find $(brew --prefix jpeg) -name jpeglib.h)
           cat /Users/runner/.bash_profile
+          find $(brew --prefix jpeg) -name jpeglib.h
       
       - name: Install jpeg
         env:
