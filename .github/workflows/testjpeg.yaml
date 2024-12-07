@@ -29,8 +29,7 @@ jobs:
           brew install jpeg
           mkdir -p /Users/runner/.R
           touch /Users/runner/.R/Makevars
-          echo 'export CPPFLAGS="-I/opt/homebrew/opt/jpeg/include"' >> /Users/runner/.R/Makevars
-          
+          echo 'export PKG_CONFIG_PATH="/opt/homebrew/opt/jpeg/lib/pkgconfig"' >> /Users/runner/.R/Makevars
 
       - name: Install jpeg
         run: |
