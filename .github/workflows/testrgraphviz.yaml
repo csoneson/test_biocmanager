@@ -6,7 +6,7 @@ name: rgraphviz-test
 jobs:
   rgraphviz-test:
     name: test-rgraphviz
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.config.os }}
     
     strategy:
       fail-fast: false
