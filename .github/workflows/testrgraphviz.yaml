@@ -1,0 +1,32 @@
+on:
+  push
+
+name: rgraphviz-test
+
+jobs:
+  rgraphviz-test:
+    name: test-rgraphviz
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - { os: macos-latest, bioc: 'release'}
+        - { os: windows-latest, bioc: 'release'}
+        - { os: ubuntu-24.04-arm, bioc: 'release'}
+        - { os: ubuntu-latest, bioc: 'release'}
+        
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+        
+      - name: Set up R and install BiocManager
+        uses: grimbough/bioc-actions/setup-bioc@v1
+        with:
+          bioc-version: ${{ matrix.config.bioc }}
+
+      - name: Install Rgraphviz
+        run: |
+          BiocManager::install("Rgraphviz")
+        shell: Rscript {0}
