@@ -1,0 +1,32 @@
+on:
+  push:
+
+name: python-test
+
+jobs:
+  python-test:
+    name: test-python
+    runs-on: ${{ matrix.config.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - { os: macos-latest, bioc: '3.22'}
+        - { os: ubuntu-latest, bioc: '3.22'}
+        
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+        
+      - name: Set up R and install BiocManager
+        uses: grimbough/bioc-actions/setup-bioc@v1
+        with:
+          bioc-version: ${{ matrix.config.bioc }}
+
+      - name: Install sketchR
+        run: |
+          Sys.setenv("BASILISK_USE_SYSTEM_DIR" = "1")
+          BiocManager::install("sketchR")
+          list.files(file.path(.libPaths()[1], "sketchR", "basilisk"))
+        shell: Rscript {0}
