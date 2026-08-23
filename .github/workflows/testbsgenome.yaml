@@ -1,0 +1,39 @@
+on:
+  push:
+  workflow_dispatch:
+
+name: bsgenome-test
+
+jobs:
+  bsgenome-test:
+    name: test-bsgenome
+    runs-on: ${{ matrix.config.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - { os: macos-latest, bioc: 'release'}
+        #- { os: windows-latest, bioc: 'release'}
+        #- { os: ubuntu-24.04-arm, bioc: 'release'}
+        #- { os: ubuntu-latest, bioc: 'release'}
+        
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+        
+      - name: Set up R and install BiocManager
+        uses: grimbough/bioc-actions/setup-bioc@v1
+        with:
+          bioc-version: ${{ matrix.config.bioc }}
+
+      - name: Install and load custom BSgenome
+        run: |
+          BiocManager::install("BSgenome")
+          rlibdir <- tempfile(pattern = "Rlib")
+          dir.create(rlibdir)
+          install.packages("https://github.com/fmicompbio/SingleMoleculeGenomicsIO/raw/refs/heads/devel/inst/extdata/BSgenome.Mmusculus.footprintR.reference_0.1.0.tar.gz", lib = rlibdir, repos = NULL)
+          list.files(rlibdir)
+          library(BSgenome.Mmusculus.footprintR.reference)
+          sessionInfo()
+        shell: Rscript {0}
