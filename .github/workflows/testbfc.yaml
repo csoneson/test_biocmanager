@@ -66,5 +66,5 @@ jobs:
 
       - name: Download data
         run: |
-          orthosData::GetorthosContrastDB()
+          orthosData::GetorthosContrastDB(organism = "Mouse", mode="DEMO")
         shell: Rscript {0}
