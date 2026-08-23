@@ -18,11 +18,46 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-        
+
+      - name: Install OpenSSL
+        if: matrix.config.os == 'macos-latest'
+        run: brew install openssl@3
+
+      - name: Configure Makevars
+        if: matrix.config.os == 'macos-latest'
+        run: |
+          mkdir -p ~/.R
+          cat <<EOF > ~/.R/Makevars
+          CPPFLAGS=-I/opt/homebrew/opt/openssl@3/include
+          LDFLAGS=-L/opt/homebrew/opt/openssl@3/lib
+          EOF
+          
+      - name: Configure environment for OpenSSL
+        if: matrix.config.os == 'macos-latest'
+        run: |
+          echo "LDFLAGS=-L/opt/homebrew/opt/openssl@3/lib" >> $GITHUB_ENV
+          echo "CPPFLAGS=-I/opt/homebrew/opt/openssl@3/include" >> $GITHUB_ENV
+          echo "PKG_CONFIG_PATH=/opt/homebrew/opt/openssl@3/lib/pkgconfig" >> $GITHUB_ENV
+
       - name: Set up R and install BiocManager
         uses: grimbough/bioc-actions/setup-bioc@v1
         with:
           bioc-version: ${{ matrix.config.bioc }}
+
+      - name: Install system dependencies (Linux)
+        if: runner.os == 'Linux' && matrix.config.image == null
+        #env:
+        #  RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          pak-version: devel
+          
+      - name: Install system dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install harfbuzz
+          brew install fribidi
 
       - name: Install orthosData
         run: |
