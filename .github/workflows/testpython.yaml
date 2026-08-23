@@ -1,5 +1,5 @@
 on:
-  push:
+  workflow_dispatch:
 
 name: python-test
 
@@ -29,4 +29,6 @@ jobs:
           Sys.setenv("BASILISK_USE_SYSTEM_DIR" = "1")
           BiocManager::install("sketchR")
           list.files(file.path(.libPaths()[1], "sketchR", "basilisk"))
+          library(sketchR)
+          getGeosketchNames()
         shell: Rscript {0}

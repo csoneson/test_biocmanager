@@ -1,0 +1,35 @@
+on:
+  push:
+
+name: bfc-test
+
+jobs:
+  bfc-test:
+    name: test-bfc
+    runs-on: ${{ matrix.config.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - { os: macos-latest, bioc: '3.24'}
+        - { os: ubuntu-latest, bioc: '3.24'}
+        
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+        
+      - name: Set up R and install BiocManager
+        uses: grimbough/bioc-actions/setup-bioc@v1
+        with:
+          bioc-version: ${{ matrix.config.bioc }}
+
+      - name: Install orthosData
+        run: |
+          BiocManager::install("orthosData")
+        shell: Rscript {0}
+
+      - name: Download data
+        run: |
+          orthosData::GetorthosContrastDB()
+        shell: Rscript {0}
